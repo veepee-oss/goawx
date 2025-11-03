@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/veepee-oss/goawx/compare/v1.2.1...v1.3.0) (2025-11-03)
+
+
+### Features
+
+* **organization:** manage the posibility to add an instance group to an organization ([150865f](https://github.com/veepee-oss/goawx/commit/150865f3bde7ad995ef285c367e7d30f34b8aa8b))
+
 ## [1.2.1](https://github.com/veepee-oss/goawx/compare/v1.2.0...v1.2.1) (2023-11-14)
 
 
