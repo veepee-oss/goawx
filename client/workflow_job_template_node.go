@@ -109,3 +109,58 @@ func (jt *WorkflowJobTemplateNodeService) DeleteWorkflowJobTemplateNode(id int) 
 
 	return result, nil
 }
+
+// DisAssociateCredentials remove Credentials form an awx workflow job template node
+func (jt *WorkflowJobTemplateNodeService) DisAssociateCredentials(id int, data map[string]interface{}, params map[string]string) (*WorkflowJobTemplateNode, error) {
+	result := new(WorkflowJobTemplateNode)
+	endpoint := fmt.Sprintf("%s%d/credentials/", workflowJobTemplateNodeAPIEndpoint, id)
+	data["disassociate"] = true
+	mandatoryFields = []string{"id"}
+	validate, status := ValidateParams(data, mandatoryFields)
+	if !status {
+		err := fmt.Errorf("Mandatory input arguments are absent: %s", validate)
+		return nil, err
+	}
+	payload, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := jt.client.Requester.PostJSON(endpoint, bytes.NewReader(payload), result, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := CheckResponse(resp); err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+// AssociateCredentials  adding credentials to WorkflowJobTemplateNodeService.
+func (jt *WorkflowJobTemplateNodeService) AssociateCredentials(id int, data map[string]interface{}, params map[string]string) (*WorkflowJobTemplateNode, error) {
+	result := new(WorkflowJobTemplateNode)
+
+	endpoint := fmt.Sprintf("%s%d/credentials/", workflowJobTemplateNodeAPIEndpoint, id)
+	data["associate"] = true
+	mandatoryFields = []string{"id"}
+	validate, status := ValidateParams(data, mandatoryFields)
+	if !status {
+		err := fmt.Errorf("Mandatory input arguments are absent: %s", validate)
+		return nil, err
+	}
+	payload, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := jt.client.Requester.PostJSON(endpoint, bytes.NewReader(payload), result, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := CheckResponse(resp); err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
